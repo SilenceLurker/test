@@ -4,7 +4,9 @@
 
 ## 项目执行人
 
-Leader: **Silence_Lurker潜默**
+总负责人: **Silence_Lurker潜默**
+
+前端负责人：**John Sii**
 
 ## 项目说明
 
@@ -14,6 +16,7 @@ Leader: **Silence_Lurker潜默**
 
 （2023.01.12  Silence_Lurker）根据当前的项目分析，主要有三类对象：
 
+- 需求人员类型
 - 加入者
 - 考核信息
 - 管理员
@@ -45,6 +48,14 @@ Leader: **Silence_Lurker潜默**
 
 ### 成员及对象具体分析
 
+#### 需求人员类型(Job)
+
+| 属性 | 数据类型 | 描述 | require |
+| -- | -- | -- | -- |
+| id(key) | Integer | 目标加入类型 | true |
+| name | String | 类型名称 | true |
+| description | String | 描述 | true |
+
 #### 加入者（Player）
 
 | 属性 | 数据类型 | 描述 | require |
@@ -59,6 +70,7 @@ Leader: **Silence_Lurker潜默**
 | id | UUID(String) | 考核信息的独立ID | true |
 | question | String | 考核题干信息 | true |
 | answer | String(File) | 考核题目解答 | true |
+| true_answer | String(File) | 题目标准答案 | true |
 | score | double(.2) | 考核结果评分 ***(初始传递值默认为0.0，若非0.0则直接拒收数据但不提示)***  | false |
 | type | String | 考核题目类型 | true |
 
@@ -68,9 +80,76 @@ Leader: **Silence_Lurker潜默**
 | -- | -- | -- | -- |
 | id | UUID(String) | 管理员的独立ID | true |
 | email | String(255) | 管理员的邮箱 | true |
+| random_key | UUID(String) | 登录用随机秘钥 | false |
+
+## 接口信息
+
+以配置路径为基础设置的对应URL的信息和返回值
+
+### 目标信息
+
+> GET /api/test
+
+获取基础数据信息
+
+Request:None
+
+返回数据：
+
+```json
+{
+    "code": ,//状态码
+    "data":{
+        //Job对象数组
+        "jobs":[
+            {
+                "id":,// job的id信息，用作提交选单获取对应的题目
+                "name":"",// job的类型（名称），用作页面显示
+                "description":""// job负责工作类型和需求的描述
+            },
+            {
+                "id":,// job的id信息，用作提交选单获取对应的题目
+                "name":"",// job的类型（名称），用作页面显示
+                "description":""// job负责工作类型和需求的描述
+            }
+            // 以此类推………………
+        ]
+
+    }
+}
+```
+
+### 题干信息
+
+> GET /api/test
+
+获取题干信息
+
+Request:
+
+| 属性 | 数据类型 | 描述 | require |
+| -- | -- | -- | -- |
+| jid | Integer | Job ID | true |
+
+返回数据：
+
+```json
+{
+    "code":,// 状态码
+    "data":{
+        "question":{
+
+        }
+    }
+}
+```
 
 ## 项目进度
 
 ### 2023.01.12
 
 项目立项，编写项目文档和接口文档，确立当前需求人物信息
+
+### 2023.01.14
+
+完善API信息，等待前端设计文档进行对接
