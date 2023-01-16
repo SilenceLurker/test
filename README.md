@@ -6,7 +6,7 @@
 
 总负责人: **Silence_Lurker潜默**
 
-前端负责人：**John Sii**
+前端负责人：**Johnson Sii**
 
 ## 项目说明
 
@@ -14,7 +14,7 @@
 
 ## 项目分析
 
-（2023.01.12  Silence_Lurker）根据当前的项目分析，主要有三类对象：
+（2023.01.12 Silence_Lurker）根据当前的项目分析，主要有三类对象：
 
 - 需求人员类型
 - 加入者
@@ -46,41 +46,55 @@
 
 <!-- end -- 以上部分非代码实现需要 -- end -->
 
+### 项目需求分析
+
+整体项目有三个业务：
+
+- 获取需求
+- 考核
+- 报名
+
+其中获取需求仅需要从后台获取对应信息。
+
+考核则需要对用户的数据进行交互接收。
+
+报名业务是最后通过考核才可进行的业务，若不合格则用户提交的信息不会向管理员账户发送对应的提示信息。
+
 ### 成员及对象具体分析
 
 #### 需求人员类型(Job)
 
-| 属性 | 数据类型 | 描述 | require |
-| -- | -- | -- | -- |
-| id(key) | Integer | 目标加入类型 | true |
-| name | String | 类型名称 | true |
-| description | String | 描述 | true |
+| 属性          | 数据类型    | 描述     | require |
+|-------------|---------|--------|---------|
+| id(key)     | Integer | 目标加入类型 | true    |
+| name        | String  | 类型名称   | true    |
+| description | String  | 描述     | true    |
 
 #### 加入者（Player）
 
-| 属性 | 数据类型 | 描述 | require |
-| -- | -- | -- | -- |
-| id | UUID(String) | 用户的独立ID | true |
-| email | String(255) | 用户邮箱 | false |
+| 属性    | 数据类型         | 描述      | require |
+|-------|--------------|---------|---------|
+| id    | UUID(String) | 用户的独立ID | true    |
+| email | String(255)  | 用户邮箱    | false   |
 
 #### 考核信息（Question）
 
-| 属性 | 数据类型 | 描述 | require |
-| -- | -- | -- | -- |
-| id | UUID(String) | 考核信息的独立ID | true |
-| question | String | 考核题干信息 | true |
-| answer | String(File) | 考核题目解答 | true |
-| true_answer | String(File) | 题目标准答案 | true |
-| score | double(.2) | 考核结果评分 ***(初始传递值默认为0.0，若非0.0则直接拒收数据但不提示)***  | false |
-| type | String | 考核题目类型 | true |
+| 属性          | 数据类型         | 描述                                          | require |
+|-------------|--------------|---------------------------------------------|---------|
+| id          | UUID(String) | 考核信息的独立ID                                   | true    |
+| question    | String       | 考核题干信息                                      | true    |
+| answer      | String(File) | 考核题目解答                                      | true    |
+| true_answer | String(File) | 题目标准答案                                      | true    |
+| score       | double(.2)   | 考核结果评分 ***(初始传递值默认为0.0，若非0.0则直接拒收数据但不提示)*** | false   |
+| type        | String       | 考核题目类型                                      | true    |
 
-#### 管理员（Admin） ~~（或者叫评分员？）~~
+#### 管理员（Admin） ~~（或者评分员）~~
 
-| 属性 | 数据类型 | 描述 | require |
-| -- | -- | -- | -- |
-| id | UUID(String) | 管理员的独立ID | true |
-| email | String(255) | 管理员的邮箱 | true |
-| random_key | UUID(String) | 登录用随机秘钥 | false |
+| 属性         | 数据类型         | 描述       | require |
+|------------|--------------|----------|---------|
+| id         | UUID(String) | 管理员的独立ID | true    |
+| email      | String(255)  | 管理员的邮箱   | true    |
+| random_key | UUID(String) | 登录用随机秘钥  | false   |
 
 ## 接口信息
 
@@ -98,71 +112,84 @@ Request:None
 
 ```json
 {
-    "code": ,//状态码
-    "data":{
-        //Job对象数组
-        "jobs":[
-            {
-                "id":,// job的id信息，用作提交选单获取对应的题目
-                "name":"",// job的类型（名称），用作页面显示
-                "description":""// job负责工作类型和需求的描述
-            },
-            {
-                "id":,// job的id信息，用作提交选单获取对应的题目
-                "name":"",// job的类型（名称），用作页面显示
-                "description":""// job负责工作类型和需求的描述
-            }
-            // 以此类推………………
-        ]
-
-    }
+  "code": 0,
+  // 状态码
+  "data": {
+    "jobs": //Job对象数组
+    [
+      {
+        "id": 0,
+        // job的id信息，用作提交选单获取对应的题目
+        "name": "",
+        // job的类型（名称），用作页面显示
+        "description": ""
+        // job负责工作类型和需求的描述
+      },
+      {
+        "id": 0,
+        // job的id信息，用作提交选单获取对应的题目
+        "name": "",
+        // job的类型（名称），用作页面显示
+        "description": ""
+        // job负责工作类型和需求的描述
+      }
+      // 以此类推………………
+    ]
+  }
 }
 ```
 
 ### 题干信息
 
-> GET /api/test
+> GET /api/test/quest
 
 获取题干信息
 
 Request:
 
-| 属性 | 数据类型 | 描述 | require |
-| -- | -- | -- | -- |
-| jid | Integer | Job ID | true |
+| 属性  | 数据类型    | 描述     | require |
+|-----|---------|--------|---------|
+| jid | Integer | Job ID | true    |
 
 返回数据：
 
 ```json
 {
-    "code":,// 状态码
-    "data":{
-        "question":{
-            "id":,// 考核信息的id
-            "question":,//"考核信息题干"
-            "score":0.0,// 考核结果评分，传递用作测试，如果恶意传递>90分的数据则直接淘汰
-            "type":// 考核问题的类型，主要分为主观题和客观题，整体得分最后由后端系统得出，前端不必考虑，该数据传递作用为处理问题的显示方式。
-        }
+  "code": 0,
+  // 状态码
+  "data": {
+    "question": {
+      "id": 0,
+      // 考核信息的id
+      "question": 0,
+      //"考核信息题干"
+      "score": 0.0,
+      // 考核结果评分，传递用作测试，如果恶意传递>90分的数据则直接淘汰
+      "type": ""
+      // 考核问题的类型，主要分为主观题和客观题，整体得分最后由后端系统得出，前端不必考虑，该数据传递作用为处理问题的显示方式。
     }
+  }
 }
 // By the way , 我是喝多了以后写的这段内容，如果有啥抽风的地方，直接踹我，不要犹豫，如果我也解释不清楚，直接删掉。
+// 我TM为什么要写上面这一行注释？
 ```
 
 ### 提交
 
-> POST /api/submit
+> POST /api/test/quest
 
 Request:
 
 ```json
 {
-    "question":{
-        "id":,
-        "question":,
-        "answer":,
-        "score":,
-        "type":,
-    }
+  "question": {
+    "id": 0,
+    "question": "",
+    "answer": "",
+    "score": 0.0,
+    // 该属性在提交时必须进行明文提交，作用也为测试。
+    "type": ""
+  }
 }
 ```
 
@@ -170,8 +197,25 @@ Request:
 
 ```json
 {
-    "code":,
-    "msg":""// 响应情况
+  "code": 0,
+  "msg": ""
+  // 响应情况
+}
+```
+
+### 报名
+
+> POST /api/test/submit
+
+Request:
+
+| 属性    | 数据类型   | 描述                                     | require |
+|-------|--------|----------------------------------------|---------|
+| email | String | 报名者的邮箱，也可以不进行提交或提交假的，但前端应进行正则判断数据是否合法。 | true    |
+
+```json
+{
+  "email": ""
 }
 ```
 
