@@ -1,23 +1,23 @@
 package xyz.silencelurker.test.entity;
 
-import java.io.Serializable;
-
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 /**
  * @author Silence_Lurker
  */
-@Data
-@Table(name = "t_applicant")
+@Table(name = "t_answer_question")
 @Entity
-public class Applicant implements Serializable {
+@Data
+public class AnswerQuestion {
     @Id
     @UuidGenerator
     private String id;
-    private String email;
+    @Transient
+    private Question question;
 }

@@ -64,38 +64,38 @@
 
 #### 需求人员类型(Job)
 
-| 属性          | 数据类型    | 描述     | require |
-|-------------|---------|--------|---------|
-| id(key)     | Integer | 目标加入类型 | true    |
-| name        | String  | 类型名称   | true    |
-| description | String  | 描述     | true    |
+| 属性        | 数据类型 | 描述         | require |
+| ----------- | -------- | ------------ | ------- |
+| id(key)     | Integer  | 目标加入类型 | true    |
+| name        | String   | 类型名称     | true    |
+| description | String   | 描述         | true    |
 
 #### 加入者（Applicant）
 
-| 属性    | 数据类型         | 描述       | require |
-|-------|--------------|----------|---------|
+| 属性  | 数据类型     | 描述          | require |
+| ----- | ------------ | ------------- | ------- |
 | id    | UUID(String) | 用户的独立 ID | true    |
-| email | String(255)  | 用户邮箱     | false   |
+| email | String(255)  | 用户邮箱      | false   |
 
 #### 考核信息（Question）
 
-| 属性          | 数据类型         | 描述                                             | require |
-|-------------|--------------|------------------------------------------------|---------|
-| id          | UUID(String) | 考核信息的独立 ID                                     | true    |
-| question    | String       | 考核题干信息                                         | true    |
-| answer      | String(File) | 考核题目解答                                         | true    |
-| true_answer | String(File) | 题目标准答案                                         | true    |
+| 属性        | 数据类型     | 描述                                                                       | require |
+| ----------- | ------------ | -------------------------------------------------------------------------- | ------- |
+| id          | UUID(String) | 考核信息的独立 ID                                                          | true    |
+| question    | String       | 考核题干信息                                                               | true    |
+| answer      | String(File) | 考核题目解答                                                               | true    |
+| true_answer | String(File) | 题目标准答案                                                               | true    |
 | score       | double(.2)   | 考核结果评分 **_(初始传递值默认为 0.0，若非 0.0 则直接拒收数据但不提示)_** | false   |
-| type        | String       | 考核题目类型                                         | true    |
-| appId       | String       | 加入者 id                                         | true    |
+| type        | String       | 考核题目类型                                                               | true    |
+| appId       | String       | 加入者 id                                                                  | true    |
 
 #### 管理员（Admin） ~~（或者评分员）~~
 
-| 属性         | 数据类型         | 描述        | require |
-|------------|--------------|-----------|---------|
+| 属性       | 数据类型     | 描述            | require |
+| ---------- | ------------ | --------------- | ------- |
 | id         | UUID(String) | 管理员的独立 ID | true    |
 | email      | String(255)  | 管理员的邮箱    | true    |
-| random_key | UUID(String) | 登录用随机秘钥   | false   |
+| random_key | UUID(String) | 登录用随机秘钥  | false   |
 
 ## 接口信息
 
@@ -148,9 +148,9 @@ Request:None
 
 Request:
 
-| 属性  | 数据类型    | 描述     | require |
-|-----|---------|--------|---------|
-| jid | Integer | Job ID | true    |
+| 属性 | 数据类型 | 描述   | require |
+| ---- | -------- | ------ | ------- |
+| jid  | Integer  | Job ID | true    |
 
 返回数据：
 
@@ -210,9 +210,9 @@ Request:
 
 Request:
 
-| 属性    | 数据类型   | 描述                                     | require |
-|-------|--------|----------------------------------------|---------|
-| email | String | 报名者的邮箱，也可以不进行提交或提交假的，但前端应进行正则判断数据是否合法。 | true    |
+| 属性  | 数据类型 | 描述                                                                         | require |
+| ----- | -------- | ---------------------------------------------------------------------------- | ------- |
+| email | String   | 报名者的邮箱，也可以不进行提交或提交假的，但前端应进行正则判断数据是否合法。 | true    |
 
 ```json
 {

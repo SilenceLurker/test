@@ -2,6 +2,8 @@ package xyz.silencelurker.test.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -19,5 +21,7 @@ public class Job implements Serializable {
     private Integer id;
     private String name;
     private String description;
+    @JsonIgnore
+    private boolean hide = false;
 
 }
